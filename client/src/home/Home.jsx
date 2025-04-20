@@ -125,8 +125,8 @@ function Home() {
   const handleAddClick = () => setShowAddForm(true);
 
   return (
-    <div className="min-h-screen bg-base-100 relative">
-      <div className="flex justify-between items-center px-6 py-4 bg-primary text-white shadow-md">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-900 via-slate-800 to-indigo-850 relative">
+      <div className="flex justify-between bg-indigo-900 items-center px-6 py-4 bg-primary text-white shadow-md">
         <h1 className="text-2xl font-bold">roomie-finder</h1>
 
         {isLoggedIn ? (
@@ -157,31 +157,44 @@ function Home() {
         )}
       </div>
 
-      <div className="p-4 flex flex-col gap-4">
-        {loading ? (
-          <p>Loading...</p>
-        ) : hostelListings.length > 0 ? (
-          hostelListings.map((listing) => (
-            <div
-              key={listing._id}
-              onClick={() => setSelectedListing(listing._id)}
-              className="flex bg-base-200 rounded-lg shadow hover:bg-base-300 cursor-pointer transition"
-            >
-              <img
-                src={listing.images?.[0] || "/placeholder.jpg"}
-                alt={listing.hostelName}
-                className="w-32 h-28 object-cover rounded-l-lg"
-              />
-              <div className="p-3">
-                <h3 className="text-lg font-semibold">{listing.hostelName}</h3>
-                <p className="text-sm text-gray-600">{listing.city}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No hostel listings available</p>
-        )}
+      <div className="p-4">
+  {loading ? (
+    <p>Loading...</p>
+  ) : hostelListings.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {hostelListings.map((listing) => (
+        <div
+        key={listing._id}
+        onClick={() => setSelectedListing(listing._id)}
+        className="flex items-center bg-white rounded-xl shadow-md hover:shadow-lg transition cursor-pointer p-3 gap-4"
+      >
+        <img
+          src={listing.images?.[0] || "/placeholder.jpg"}
+          alt={listing.hostelName}
+          className="w-24 h-24 rounded-lg object-cover"
+        />
+        <div className="flex flex-col justify-between w-full">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-semibold text-primary">{listing.hostelName}</h3>
+            <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
+              ₹{listing.rent}/month
+            </span>
+          </div>
+          <p className="text-sm text-gray-600">{listing.address}, {listing.city}</p>
+          <div className="flex items-center text-sm text-gray-500 gap-4 mt-1">
+            <span>🛏️ {listing.capacity} beds</span>
+            <span>📍 Near {listing.landmark}</span>
+          </div>
+        </div>
       </div>
+      
+      ))}
+    </div>
+  ) : (
+    <p>No hostel listings available</p>
+  )}
+</div>
+
 
       {isLoggedIn && (
         <button
