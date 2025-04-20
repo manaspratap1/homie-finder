@@ -5,7 +5,6 @@ dotenv = require('dotenv').config();
 
 const registerUser = async (req, res) => {
     const { name, email, password, phone, profilePic } = req.body;
-
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -46,6 +45,7 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    console.log(req.body);
 
     try {
         const user = await User.findOne({ email });
@@ -60,6 +60,7 @@ const loginUser = async (req, res) => {
 
         res.json({
             user: {
+                success : true,
                 id: user._id,
                 name: user.name,
                 email: user.email,

@@ -10,7 +10,6 @@ cloudinary.config({
 
 const createFlat = async (req, res) => {
     const { hostelName,  address, city, landmark, capacity, rent, description } = req.body;
-    console.log(req.files);
 
     if (!req.files || req.files.length === 0) {
         return res.status(400).json({ message: 'No images uploaded' });
@@ -54,6 +53,16 @@ const createFlat = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ message: 'Error creating flat', error: error.message });
+    }
+};
+
+const getMyFlats = async (req, res) => {
+    try {
+        console.log(req.user._id); 
+        const flats = await Flat.find({ owner: req.user._id }).sort({ createdAt: -1 });
+        res.json(flats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -151,5 +160,6 @@ module.exports = {
     getAllFlats,
     getFlatById,
     updateFlat,
-    deleteFlat
+    deleteFlat,
+    getMyFlats,
 };

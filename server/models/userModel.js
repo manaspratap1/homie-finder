@@ -1,27 +1,28 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-    phone:{
+    phone: {
         type: String,
         required: true,
     },
-    profilePic:{
+    profilePic: {
         type: String,
         default: "https://www.w3schools.com/howto/img_avatar.png",
     },
 });
 
-module.exports = mongoose.model('USER', userSchema);
+const User = mongoose.model('User', userSchema);  // Register the 'User' model
+module.exports = User;

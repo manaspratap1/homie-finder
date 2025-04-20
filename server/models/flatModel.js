@@ -50,4 +50,4 @@ const flatSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('FLAT', flatSchema);
+module.exports = mongoose.model('Flat', flatSchema);
